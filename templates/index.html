@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+</head>
+<body>
+    <h1>Sorted Data</h1>
+    <ul id="sorted-data"></ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Listen for the 'data_update' event
+        socket.on('data_update', () => {
+            // Fetch the updated data from the server
+            fetch('/index', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the HTML content with the fetched data
+                const sortedDataElement = document.getElementById('sorted-data');
+                sortedDataElement.innerHTML = ''; // Clear existing content
+                data.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${item.first} - ${item.last} - ${item.email} - ${item.number} - ${item.time} - ${item.appoint} - ${item.timestamp}`;
+                    sortedDataElement.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching sorted data:', error));
+        });
+    </script>
+</body>
+</html>
