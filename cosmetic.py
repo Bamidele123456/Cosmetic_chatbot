@@ -102,10 +102,14 @@ def sends_email(first, last, number, appoint):
 def inde():
     return render_template('index.html')
 
+@app.route('/indexs')
+def indexs():
+    return render_template('indexs.html')
 
 @app.route('/index', methods=['POST'])
 def index():
-    sorted_data = list(messages.find().sort('timestamp', pymongo.DESCENDING))
+    sorted_data = list(messages.find({}, {'_id': 0}).sort('timestamp', pymongo.DESCENDING))
+    print('hello')
 
     return jsonify(sorted_data)
 @app.route('/', methods=['POST'])
