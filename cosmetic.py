@@ -2,6 +2,7 @@ import flask
 from flask import Flask, request, json, jsonify,make_response,render_template
 from flask import Flask, session
 import uuid
+# import eventlet
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from flask_socketio import SocketIO
@@ -11,7 +12,9 @@ from email.mime.multipart import MIMEMultipart
 import pymongo
 import time
 from datetime import datetime
+from sende import review_email
 app = Flask(__name__)
+# socketio = SocketIO(app, async_mode='eventlet')
 socketio = SocketIO(app)
 app.secret_key = 'your_secret_key'
 
@@ -39,20 +42,21 @@ def send_database(first,last,number,email,time,appoint):
         "time":time,
         "appoint":appoint,
         "timestamp":timestamp,
-        "messages":f"{first} {last} with phone number {number} and email {email} wants to booked  an appointment named {appoint} on time {time}"
+        "messages":f"{first} {last}  wants to booked  an appointment named {appoint} in the {time}"
     }
     messages.insert_one(send)
 
-def send_databases(first, last, number, appoint):
+def send_databases(first, last, number,email, appoint):
     timestamp = datetime.now()
     send={
         "first":first,
         "last":last,
+        "email":email,
         "number":number,
         "time":time,
         "appoint":appoint,
         "timestamp":timestamp,
-        "messages": f"{first} {last} with phone number {number} wants to booked  an appointment named {appoint} on time {time} "
+        "messages": f"{first} {last} wants to booked  an appointment named {appoint} in the {time} "
     }
     messages.insert_one(send)
 def send_email(first, last, number, email, time, appoint):
@@ -105,6 +109,47 @@ def inde():
 @app.route('/indexs')
 def indexs():
     return render_template('indexs.html')
+
+@app.route('/gogn')
+def gogn():
+    return render_template('gogn.html')
+@app.route('/cos')
+def cos():
+    return render_template('cos.html')
+@app.route('/momew')
+def momew():
+    return render_template('momew.html')
+@app.route('/review')
+def review():
+    return render_template('review.html')
+@app.route('/review-email', methods=['POST'])
+def reviewe():
+    try:
+        email = request.form.get('email')
+        print(email)
+        review_email(email)
+
+        # Return a success response
+        return jsonify({'status': 'success', 'message': f'Email {email} received'})
+    except Exception as e:
+        # Return an error response in case of exception
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+@app.route('/send-email', methods=['POST'])
+def email():
+    try:
+        data = request.get_json()  # Parse the incoming JSON data
+        email = data.get('email')
+        print(email)
+        review_email(email)
+
+        # Return a success response
+        return jsonify({'status': 'success', 'message': f'Email {email} received'})
+    except Exception as e:
+        # Return an error response in case of exception
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+
 
 @app.route('/index', methods=['POST'])
 def index():
@@ -785,9 +830,10 @@ def Nospanext():
     first = data['queryResult']['parameters'].get('first')
     last = data['queryResult']['parameters'].get('last')
     number = data['queryResult']['parameters'].get('number')
+    email = data['queryResult']['parameters'].get('email')
     appoint = "Patient Cordinator"
     sends_email(first, last, number, appoint)
-    send_databases(first, last, number, appoint)
+    send_databases(first, last, number,email, appoint)
     socketio.emit('data_update')
 
 

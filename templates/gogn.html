@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            display: flex;
+            justify-content: top;
+            align-items: center;
+            background-image: url('https://cdn.msgsndr.com/location%2FgZS7FYPpwOLBYeBKuakQ%2Fimages%2F3535bcfc-bd4a-4695-b367-1f163e919560.jpeg?alt=media');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        
+        .container {
+            text-align: center;
+            /* background: rgba(255, 255, 255, 0.8); */
+            /* padding: 20px; */
+            border-radius: 10px;
+        }
+        .logo {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .text {
+            display: block;
+            margin: 3vh 0;
+            font-weight: normal;
+            font-size: 30px;
+            font-family: var(--contentfont);;;
+        }
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 20vw;
+        }
+        .icons img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50% !important;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .icons img:hover {
+            transform: scale(1.1);
+        }
+        .buttons{
+            background-color: var(--transparent);
+            border-color: #A84E56;
+            border-top-width: 5px;
+            border-left-width: 0px;
+            border-bottom-width: 0px;
+            border-right-width: 0px;
+            border-style: solid;
+        }
+        .image-button {
+            position: relative;
+            border: none;
+            background: none;
+            padding: 0;
+            cursor: pointer;
+            overflow: hidden;
+            }
+
+            .image-button img {
+            display: block;
+            width: 100%;
+            height: auto;
+            }
+
+            .button-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Background color for text */
+            color: white; /* Text color */
+            padding: 5px; /* Adjust as needed */
+            }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container"style="width: 80vw;height:auto; padding-top: 5%;">
+        <img src="{{ url_for('static', filename='img/Cosmetic.png') }}" alt="" style="width:50vw !important;" class="img-none img-border-none img-shadow-none img-effects-none hl-optimized mw-100" loading="lazy">
+        <div class="text">Would you recommend us to a friend?</div>
+        </div>
+    </div>
+    <div class="buttons"style="width:40vw;display: flex; justify-content: center;gap:120px; padding: 10px 50px; box-shadow:0 2px 5px 2px rgba(0, 0, 0, .4); ">
+          
+          <a href="/cos" style="width: 30%; background-color: #A84E56; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-decoration: none;">
+            <img src="{{ url_for('static', filename='img/like.png') }}" alt="" style="width: 30px; height: 30px;margin-top: 5px;padding-top: 5px;">
+            <p>YES!</p>
+          </a>
+          <a href="/momew" style="width: 30%; background-color: #A84E56; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-decoration: none;">
+            <img src="{{ url_for('static', filename='img/dislike.png') }}" alt="" style="width: 30px; height: 30px;margin-top: 5px;padding-top: 5px;">
+            <p>Probably Not</p>
+          </a>
+          
+    </div>
+    
+</body>
+</html>

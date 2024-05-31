@@ -14,6 +14,21 @@
         font-family: Inter;
         font-size: 16px;
       }
+     .button-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      margin-left: auto; /* Pushes the button to the right */
+    }
+    .button-link:hover {
+        background-color: #0056b3;
+    }
 
       body {
         font-weight: 400;
@@ -44,15 +59,15 @@
       rel="stylesheet"
       href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" /></head
   >
-<body
-    >
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" /><div
-      ><div class="home-container"
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+  <div>
+    <div class="home-container"
         ><div class="home-container01"
           ><div class="home-container02"
-            ><h1 class="home-text">Heading</h1
-            ><span class="home-text01">Text</span></div
+            ><h1 class="home-text"></h1
+            ><span class="home-text01"></span></div
           ><div class="home-container03"
             ><div class="home-container04"
               ><div class="home-container05"
@@ -62,8 +77,8 @@
                   ></path></svg
                 ><div class="home-container06"
                   ><span class="home-conversation-began"
-                    ><span>Conversation begins</span><br /><br /></span
-                  ><span class="home-text05">Text</span></div
+                    ><span>Conversation began</span><br /><br /></span
+                  ><a href="/review">Review</a></div
                 ></div
               ><div class="home-container07"
                 ><span class="home-text06">Text</span></div
@@ -73,8 +88,8 @@
                     d="M512 64c282.77 0 512 186.25 512 416 0 229.752-229.23 416-512 416-27.156 0-53.81-1.734-79.824-5.044-109.978 109.978-241.25 129.7-368.176 132.596v-26.916c68.536-33.578 128-94.74 128-164.636 0-9.754-0.758-19.33-2.164-28.696-115.796-76.264-189.836-192.754-189.836-323.304 0-229.75 229.23-416 512-416z"
                   ></path></svg
                 ><span class="home-text07"
-                  ><span>this is your text</span
-                  ><br /><br /></span></div></div></div
+                  ><span id="text"></span
+                  ><br /><br /></span></div></div><a href="#" id="send-email-button" class="button-link">Review</a></div
           ><div class="home-container09"
             ><div class="home-container10"></div
             ><div class="home-container11"
@@ -88,7 +103,9 @@
         ></div
       ></div
     >
-    <script>
+
+   <script>
+   const fullHtmlPage = document.documentElement.outerHTML;
     const socket = io();
 
     // Function to update data
@@ -103,36 +120,106 @@
         .then(response => response.json())
         .then(data => {
             // Update the HTML content with the fetched data
-            const container = document.getElementsByClassName('home-container02')[0]; // Get the first (and only) container
-            container.innerHTML = ''; // Clear existing content (even if container is null)
+            const container = document.getElementsByClassName('home-container02')[0];
+            container.innerHTML = ''; // Clear existing content
+
+            // Populate the HTML tags with the first item's data
+            if (data.length > 0) {
+                populateAdditionalInfo(data[0]);
+            }
 
             // Loop through the data array
             data.forEach(item => {
+                // Create message container
+                const messageContainer = document.createElement('div');
+                messageContainer.classList.add('message-container');
+
+                 function fadeDiv() {
+                // Toggle the 'faded' class on the div to trigger the fading effect
+                messageContainer.classList.toggle('faded');
+
+                // Optionally, you can remove the 'faded' class after the fading effect ends to reset the div
+                setTimeout(() => {
+                    messageContainer.classList.remove('faded');
+                }, 500); // Duration matches the CSS transition duration
+                }
+
+                // Add an event listener to the message container for the click event
+                messageContainer.addEventListener('click', fadeDiv);
+
                 // Create <h1> element for phone number
                 const phoneNumberElement = document.createElement('h1');
                 phoneNumberElement.classList.add('home-text');
                 phoneNumberElement.textContent = item.number;
+                phoneNumberElement.classList.add('bordered-element');
 
                 // Create <span> element for text
                 const textElement = document.createElement('span');
                 textElement.classList.add('home-text01');
-                const message = "i am a bad boyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy";
-                const truncatedText = message && message.length > 15 ? message.substring(0, 15) + '...' : message || '';
+                const message = item.messages;
+                const truncatedText = message && message.length > 17 ? message.substring(0, 17) + '...' : message || '';
                 textElement.textContent = truncatedText;
 
-                // Append elements to container
-                container.appendChild(phoneNumberElement);
-                container.appendChild(textElement);
+                // Append elements to message container
+                messageContainer.appendChild(phoneNumberElement);
+                messageContainer.appendChild(textElement);
+
+                // Add event listener to message container
+                messageContainer.addEventListener('click', () => {
+                    // Populate additional information
+                    populateAdditionalInfo(item);
+                });
+
+                // Append message container to main container
+                container.appendChild(messageContainer);
             });
         })
         .catch(error => console.error('Error fetching data:', error));
     };
 
-    // Initial call to update data
-    updateData();
+    // Function to populate additional information
+    const populateAdditionalInfo = (item) => {
+        document.getElementsByClassName('home-text06')[0].textContent = item.timestamp;
+        document.getElementById('text').textContent = item.messages;
+        const fullName = item.first + ' ' + item.last;
+        document.getElementsByClassName('home-text12')[0].textContent = fullName;
+        document.getElementsByClassName('home-text14')[0].textContent = item.email;
+        document.getElementsByClassName('home-text16')[0].textContent = item.number;
+        currentEmail = item.email;
+    };
+    const sendEmailButton = document.getElementById('send-email-button');
+        sendEmailButton.onclick = () => {
+            sendEmail(currentEmail);
+        };
+    const sendEmail = (email) => {
+        fetch('/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Email sent successfully:', data);
+        })
+        .catch(error => console.error('Error sending email:', error));
+    };
 
-    // Listen for the 'data_update' event from socket
-    socket.on('data_update', updateData);
+
+    // Initial call to update data
+    window.onload = function() {
+    updateData();
+    setTimeout(() => {
+        document.body.style.opacity = 1;
+    }, 4000);
+    document.body.style.opacity = 1;
+    }
+    socket.on('data_update', () => {
+        updateData(); // Fetch data from the '/index' route
+    });
+
+
 </script>
   </body></html
 >

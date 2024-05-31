@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Page</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://cdn.msgsndr.com/location%2FgZS7FYPpwOLBYeBKuakQ%2Fimages%2F3535bcfc-bd4a-4695-b367-1f163e919560.jpeg?alt=media');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        
+        .container {
+            text-align: center;
+            position: absolute;
+            top:5vh;
+            /* background: rgba(255, 255, 255, 0.8); */
+            /* padding: 20px; */
+            border-radius: 10px;
+        }
+        .logo {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .text {
+            margin: 5vh 0;
+            font-size: 32px;
+            font-weight: normal;
+            font-family: var(--headlinefont);;
+        }
+        .icons {
+            display: flex;
+            justify-content: center;
+            gap: 20vw;
+        }
+        .icons img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50% !important;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .icons img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container"style="width: 100vw;height:60vh">
+        <img src="{{ url_for('static', filename='img/Cosmetic.png') }}" alt="" style="width:70vw !important;" class="img-none img-border-none img-shadow-none img-effects-none hl-optimized mw-100" loading="lazy">
+        <div class="text">Please select where you would like to place your review:</div>
+        <div class="icons">
+            <a href="https://reviewthis.biz/aa91246d" target="_blank">
+                <img src="{{ url_for('static', filename='img/google.png') }}" alt="Google">
+            </a>
+            <a href="https://www.yelp.com/biz/cosmetic-creations-skin-sanctuary-and-med-spa-chatsworth-3" target="_blank">
+                <img src="{{ url_for('static', filename='img/yelp.png') }}" alt="Yelp">
+            </a>
+        </div>
+    </div>
+</body>
+</html>

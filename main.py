@@ -42,14 +42,24 @@ def varian():
         "number": number,
         "time": time,
         "appoint": appoint,
-        "timestamp": timestamp
+        "timestamp": timestamp,
+        "message":"hi"
     }
     messages.insert_one(send)
     socketio.emit('data_update')
     return jsonify("done")
 @app.route('/inde')
 def inde():
-    return render_template('index.html')
+    return render_template('indexs.html')
+@app.route('/gogn')
+def gogn():
+    return render_template('gogn.html')
+@app.route('/cos')
+def cos():
+    return render_template('cos.html')
+@app.route('/momew')
+def momew():
+    return render_template('momew.html')
 @app.route('/index', methods=['POST'])
 def index():
     # Fetch the sorted data from the database

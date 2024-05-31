@@ -2,15 +2,14 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-def send_email(first, last, number, appoint):
+def review_email(email):
     # Email configuration
     sender_email = "bamideleprecious85@gmail.com"
     receiver_email = "orikubamidele@gmail.com"
     password = "fhdr vwep reuq laxg"
 
     # Email content
-    subject = "Appointment Details"
-    body = f"First Name: {first}\nLast Name: {last}\nPhone Number: {number}\nAppointment Type: {appoint}"
+    subject = "Please share your feedback"
     html_content = """<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -70,7 +69,7 @@ def send_email(first, last, number, appoint):
             .button {
                 background-color: #28a745;
                 color: #ffffff;
-                padding: 10px 20px;
+                padding: 15px 50px;
                 text-decoration: none;
                 border-radius: 5px;
                 display: inline-block;
@@ -92,7 +91,7 @@ def send_email(first, last, number, appoint):
     <body>
         <div class="container">
             <div class="header">
-                <img src="Cosmetic.png" alt="Cosmetic Creations Logo">
+                <img src="https://cosmeticcreationsspa.com/wp-content/uploads/2016/08/logo.png" alt="Cosmetic Creations Logo">
                 <p>5 ⭐ ⭐ ⭐ ⭐ ⭐</p>
             </div>
             <div class="content">
@@ -101,12 +100,12 @@ def send_email(first, last, number, appoint):
                 <p>Thanks for choosing Cosmetic Creations Skin Sanctuary & Med Spa. I hope you enjoyed your visit to Cosmetic Creations.</p>
                 <p>Please consider leaving a review on Google and/or Yelp as it really helps us. Please mention your Aesthetician's name when leaving a review. If you have already left us a review then we thank you! ❤️ Cosmetic Creations Team!</p>
                 <div class="button-container">
-                    <a href="https://www.google.com/" class="button">Review Us</a>
+                    <a href="https://827c-105-112-222-108.ngrok-free.app/gogn" class="button">Review Us</a>
                 </div>
                 <p>Sincerely,</p>
                 <p>Rebecca Rotter</p>
                 <div class="footer">
-                    <img src="Creations.png" alt="Rebecca Rotter">
+                    <img src="https://cosmeticcreationsstore.com/cdn/shop/files/Final-New-Logo-2020_2_300x300.png?v=1613544613" alt="Rebecca Rotter">
                     <p>Cosmetic Creations Skin Sanctuary & Med Spa</p>
                     <p>9923 TOPANGA CANYON BLVD.<br>Chatsworth, CA<br>(818) 528-5805<br><a href="mailto:info@cosmeticcreationsspa.com">info@cosmeticcreationsspa.com</a><br><a href="https://cosmeticcreationsspa.com">cosmeticcreationsspa.com</a></p>
                 </div>
@@ -119,11 +118,10 @@ def send_email(first, last, number, appoint):
     # Constructing the email
     message = MIMEMultipart()
     message["From"] = sender_email
-    message["To"] = receiver_email
+    message["To"] = email
     message["Subject"] = subject
     part = MIMEText(html_content, "html")
     message.attach(part)
-    # message.attach(MIMEText(body, "plain"))
 
     # Sending the email
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
@@ -131,11 +129,4 @@ def send_email(first, last, number, appoint):
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
 
-# Assuming `first`, `last`, `number`, and `appoint` are extracted from the JSON data as mentioned in your code
-first = "John"
-last = "Doe"
-number = "1234567890"
-appoint = "Patient Coordinator"
 
-# Sending the email
-send_email(first, last, number, appoint)

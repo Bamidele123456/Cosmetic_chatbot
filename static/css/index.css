@@ -1,7 +1,7 @@
 .home-container {
   width: 100%;
   display: flex;
-  overflow: auto;
+  overflow: hidden;
   min-height: 100vh;
   align-items: center;
   flex-direction: column;
@@ -10,6 +10,7 @@
   width: 100%;
   height: 100%;
   display: flex;
+  overflow: hidden;
   z-index: 100;
   align-items: flex-start;
   animation-name: none;
@@ -19,16 +20,31 @@
   animation-iteration-count: 1;
   animation-timing-function: ease;
 }
+
+.message-container{
+    background-color: lightgrey;
+    transition: opacity 0.5s ease;
+    cursor:pointer;
+    border-bottom: 2px dashed black; /* Customize the border style */
+    width: 100%
+}
+.faded {
+    opacity: 0.5; /* Set the opacity to 50% to create a fading effect */
+}
+body {
+    opacity: 0; /* Hide the content initially */
+}
 .home-container02 {
   flex: 0 0 auto;
-  width: 25%;
-  height: 557px;
+  width: 20%;
+  height: 625px;
   display: flex;
+  overflow: auto;
   align-items: flex-start;
   flex-direction: column;
 }
 .home-text {
-  width: var(--dl-size-size-xxlarge);
+  width: 75%;
   height: var(--dl-size-size-small);
   align-self: flex-start;
   font-style: normal;
@@ -50,7 +66,8 @@
 .home-container03 {
   flex: 0 0 auto;
   width: 50%;
-  height: 557px;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -144,8 +161,13 @@
 .home-text07 {
   top: 65px;
   left: 61px;
-  width: 300px;
-  height: 70px;
+  min-width: 60px;
+  min-height: 30px;
+  max-width: 800px; /* Set a maximum width */
+  max-height: 800px;
+  width: auto; /* Let the width adjust automatically */
+  height: auto; /* Let the height adjust automatically */
+  resize: both;
   position: absolute;
   font-family: "Arial";
   border-color: var(--dl-color-gray-black);
@@ -159,6 +181,7 @@
   width: 25%;
   height: 556px;
   display: flex;
+  overflow: hidden;
   z-index: 100;
   position: relative;
   align-items: center;
@@ -209,8 +232,8 @@
 }
 .home-text14 {
   top: 37%;
-  left: 38%;
-  width: var(--dl-size-size-medium);
+  left: 35%;
+  width: var(--dl-size-size-large);
   height: var(--dl-size-size-small);
   position: absolute;
   text-align: center;
@@ -232,7 +255,7 @@
 }
 @media(max-width: 1600px) {
   .home-text {
-    width: var(--dl-size-size-xxlarge);
+    width: 75%;
     height: var(--dl-size-size-small);
     align-self: flex-start;
     margin-top: 3%;
@@ -254,7 +277,7 @@
     left: 36%;
   }
   .home-text14 {
-    left: 36%;
+    left: 30%;
   }
   .home-text16 {
     left: 36%;
