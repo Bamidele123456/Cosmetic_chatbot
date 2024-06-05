@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, request, json, jsonify,make_response,render_template
+from flask import Flask, request, json, jsonify,make_response,render_template,redirect
 from flask import Flask, session
 import uuid
 # import eventlet
@@ -12,6 +12,7 @@ from email.mime.multipart import MIMEMultipart
 import pymongo
 import time
 from datetime import datetime
+from private import private
 from sende import review_email
 app = Flask(__name__)
 # socketio = SocketIO(app, async_mode='eventlet')
@@ -62,7 +63,7 @@ def send_databases(first, last, number,email, appoint):
 def send_email(first, last, number, email, time, appoint):
     # Email configuration
     sender_email = "bamideleprecious85@gmail.com"
-    receiver_email = "orikubamidele@gmail.com"
+    receiver_email = "Rebecca@cosmeticcreationsspa.com"
     password = "fhdr vwep reuq laxg"
 
     # Email content
@@ -88,7 +89,7 @@ def sends_email(first, last, number, appoint):
     password = "fhdr vwep reuq laxg"
     # Email content
     subject = "Appointment Details"
-    body = f"First Name: {first}\nLast Name: {last}\nPhone Number: {number}\n Time: {time}\nAppointment Type: {appoint}"
+    body = f"First Name: {first}\nLast Name: {last}\nPhone Number: {number}\nAppointment Type: {appoint}"
 
     # Constructing the email
     message = MIMEMultipart()
@@ -110,6 +111,15 @@ def inde():
 def indexs():
     return render_template('indexs.html')
 
+@app.route('/private', methods=['POST'])
+def privatef():
+    feedback = request.form.get("feedback")
+    name = request.form.get("name")
+    email = request.form.get("email")
+    phone = request.form.get("phone")
+    private(name, email, phone, feedback)
+    return redirect("/momew")
+
 @app.route('/gogn')
 def gogn():
     return render_template('gogn.html')
@@ -126,14 +136,13 @@ def review():
 def reviewe():
     try:
         email = request.form.get('email')
-        print(email)
         review_email(email)
 
         # Return a success response
-        return jsonify({'status': 'success', 'message': f'Email {email} received'})
+        return redirect("/review")
     except Exception as e:
         # Return an error response in case of exception
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        return redirect("/review")
 @app.route('/send-email', methods=['POST'])
 def email():
     try:

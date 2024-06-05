@@ -22,10 +22,10 @@
 }
 
 .message-container{
-    background-color: lightgrey;
+    background-color:linear-gradient(to right, #e0f7fa 0%, #80deea 100%);
     transition: opacity 0.5s ease;
     cursor:pointer;
-    border-bottom: 2px dashed black; /* Customize the border style */
+    border-bottom: 2px inset #fbbdb4;;
     width: 100%
 }
 .faded {
@@ -37,11 +37,40 @@ body {
 .home-container02 {
   flex: 0 0 auto;
   width: 20%;
-  height: 625px;
+  height: 100vh;
   display: flex;
   overflow: auto;
   align-items: flex-start;
   flex-direction: column;
+}
+.home-container02::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+.home-container02::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the track */
+  border-radius: 10px;
+}
+
+/* Scrollbar thumb */
+.home-container02::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #ffd8cb 0%, #fbbdb4 100%);
+  border-radius: 10px;
+}
+
+.home-container02::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to right, #fbbdb4 0%, #ffd8cb 100%);
+}
+
+/* For Firefox */
+.home-container02 {
+  scrollbar-width: thin; /* Makes the scrollbar thinner */
+  scrollbar-color: #fbbdb4 #f1f1f1; /* Color of the scrollbar thumb and track */
+}
+
+/* For IE and Edge */
+.home-container02 {
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* Automatically hides the scrollbar when not in use */
 }
 .home-text {
   width: 75%;
@@ -98,7 +127,7 @@ body {
   height: 42px;
   align-self: flex-start;
   border-color: var(--dl-color-gray-white);
-  border-width: 1px;
+  border-width: 0px;
   animation-name: none;
   animation-delay: 0s;
   animation-duration: 300ms;
