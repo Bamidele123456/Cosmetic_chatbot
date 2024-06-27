@@ -19,9 +19,9 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 app.secret_key = 'your_secret_key'
 
-uri = "mongodb+srv://Bamidele1:1631324de@mycluster.vffurcu.mongodb.net/?retryWrites=true&w=majority"
+uri = "mongodb+srv://Bamidele:1631324de@cluster0.hrdikjw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(uri)
-dbs = client['test']
+dbs = client['Data']
 day = dbs['day']
 user = dbs['User Data']
 emaild = dbs['email']
@@ -42,6 +42,8 @@ def send_database(first,last,number,email,time,appoint):
         "number":number,
         "time":time,
         "appoint":appoint,
+        "appointent":"false",
+        "review":"false",
         "timestamp":timestamp,
         "messages":f"{first} {last}  wants to booked  an appointment named {appoint} in the {time}"
     }
@@ -56,15 +58,17 @@ def send_databases(first, last, number,email, appoint):
         "number":number,
         "time":time,
         "appoint":appoint,
+        "appointent": "false",
+        "review": "false",
         "timestamp":timestamp,
         "messages": f"{first} {last} wants to booked  an appointment named {appoint} in the {time} "
     }
     messages.insert_one(send)
 def send_email(first, last, number, email, time, appoint):
     # Email configuration
-    sender_email = "bamideleprecious85@gmail.com"
+    sender_email = "review@cosmeticcreationsspa.com"
     receiver_email = "Rebecca@cosmeticcreationsspa.com"
-    password = "fhdr vwep reuq laxg"
+    password = "fdxi slyq umoh klge"
 
     # Email content
     subject = "Appointment Details"
@@ -84,9 +88,9 @@ def send_email(first, last, number, email, time, appoint):
         server.sendmail(sender_email, receiver_email, message.as_string())
 def sends_email(first, last, number, appoint):
     # Email configuration
-    sender_email = "bamideleprecious85@gmail.com"
+    sender_email = "review@cosmeticcreationsspa.com"
     receiver_email = "Rebecca@cosmeticcreationsspa.com"
-    password = "fhdr vwep reuq laxg"
+    password = "fdxi slyq umoh klge"
     # Email content
     subject = "Appointment Details"
     body = f"First Name: {first}\nLast Name: {last}\nPhone Number: {number}\nAppointment Type: {appoint}"
@@ -123,6 +127,9 @@ def privatef():
 @app.route('/gogn')
 def gogn():
     return render_template('gogn.html')
+@app.route('/bot')
+def bot():
+    return render_template('bot.html')
 @app.route('/cos')
 def cos():
     return render_template('cos.html')
@@ -166,6 +173,31 @@ def index():
     print('hello')
 
     return jsonify(sorted_data)
+@app.route('/update_checkbox_state', methods=['POST'])
+def update_checkbox_state():
+    email = request.json.get('email')
+    print(request.json)
+    appointment = request.json.get('appointment', False)
+    review = request.json.get('review', False)
+    message = request.json.get('message')
+    messages.update_one(
+        {"email": email},
+        {"$set": {"messages":message,"appointment": appointment, "review": review}}
+    )
+    return jsonify(success=True)
+@app.route('/get_checkbox_state', methods=['POST'])
+def get_checkbox_state():
+    print(request.json)
+    message = request.json.get('message')
+    email = request.json.get('email')
+    result = messages.find_one({"email":email,"messages":message})
+    appointment = result.get("appointment")
+    review = result.get("review")
+    checkbox_state = {
+        "appointment": appointment,
+        "review": review
+    }
+    return jsonify(checkbox_state)
 @app.route('/', methods=['POST'])
 def mainpath():
     # Get the JSON data from the Dialogflow request
@@ -1336,4 +1368,4 @@ def open():
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='localhost', port=8080, debug=True)
+    socketio.run(app, host='localhost', port=8080)

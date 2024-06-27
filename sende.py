@@ -4,9 +4,9 @@ from email.mime.multipart import MIMEMultipart
 
 def review_email(email):
     # Email configuration
-    sender_email = "bamideleprecious85@gmail.com"
+    sender_email = "review@cosmeticcreationsspa.com"
     receiver_email = email
-    password = "fhdr vwep reuq laxg"
+    password = "fdxi slyq umoh klge"
 
     # Email content
     subject = "Please share your feedback"
@@ -129,6 +129,3 @@ def review_email(email):
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
 
-
-nemail = "bamidele8885@gmail.com"
-review_email(nemail)

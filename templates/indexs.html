@@ -40,8 +40,9 @@
         line-height: 1.15;
         color: var(--dl-color-gray-black);
         background-color: var(--dl-color-gray-white);
+      }
 
-      }</style
+    </style
     ><link
       rel="stylesheet"
       href="https://unpkg.com/animate.css@4.1.1/animate.css" /><link
@@ -61,7 +62,9 @@
       href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" /></head
   >
 <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script><link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
   <div>
     <div class="home-container"
@@ -90,7 +93,20 @@
                   ></path></svg
                 ><span class="home-text07"
                   ><span id="text"></span
-                  ><br /><br /></span></div></div><a href="#" id="send-email-button" class="button-link">Send Review</a></div
+                  ><br /><br /></span></div></div>
+                <form style="margin-left: auto;">
+                    <div  class="checkbox-wrapper-14">
+                        <input id="appointment-checkbox" type="checkbox" class="switch">
+                        <label for="appointment-checkbox">Appointment</label>
+                    </div>
+                    <div style="margin-left: auto;" class="checkbox-wrapper-14">
+                        <input id="review-checkbox" type="checkbox" class="switch">
+                        <label for="review-checkbox">Review Sent</label>
+                    </div>
+                </form>
+                <a href="#" id="send-email-button" class="button-link">Send Review</a>
+
+          </div
           ><div class="home-container09"
             ><div class="home-container10"></div
             ><div class="home-container11"
@@ -135,14 +151,14 @@
                 const messageContainer = document.createElement('div');
                 messageContainer.classList.add('message-container');
 
-                 function fadeDiv() {
-                // Toggle the 'faded' class on the div to trigger the fading effect
-                messageContainer.classList.toggle('faded');
+                function fadeDiv() {
+                    // Toggle the 'faded' class on the div to trigger the fading effect
+                    messageContainer.classList.toggle('faded');
 
-                // Optionally, you can remove the 'faded' class after the fading effect ends to reset the div
-                setTimeout(() => {
-                    messageContainer.classList.remove('faded');
-                }, 500); // Duration matches the CSS transition duration
+                    // Optionally, you can remove the 'faded' class after the fading effect ends to reset the div
+                    setTimeout(() => {
+                        messageContainer.classList.remove('faded');
+                    }, 500); // Duration matches the CSS transition duration
                 }
 
                 // Add an event listener to the message container for the click event
@@ -186,12 +202,69 @@
         document.getElementsByClassName('home-text12')[0].textContent = fullName;
         document.getElementsByClassName('home-text14')[0].textContent = item.email;
         document.getElementsByClassName('home-text16')[0].textContent = item.number;
+        curentmessage = item.messages
         currentEmail = item.email;
+        const updateDatas = {
+          email: currentEmail,
+          message: item.messages
+      };
+        fetch('/get_checkbox_state', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updateDatas)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data) {
+            // Update the checkboxes with the fetched data
+            console.log(data.appointment)
+            console.log(data.review)
+            document.getElementById('appointment-checkbox').checked = data.appointment;
+            document.getElementById('review-checkbox').checked = data.review;
+            console.log('Checkbox state fetched successfully');
+        } else {
+            console.error('Failed to fetch checkbox state');
+        }
+    })
     };
+    const appointmentCheckbox = document.getElementById('appointment-checkbox');
+    const reviewCheckbox = document.getElementById('review-checkbox');
+
+    appointmentCheckbox.addEventListener('change', () => {
+        updateCheckboxState(currentEmail,curentmessage, appointmentCheckbox.checked, reviewCheckbox.checked);
+    });
+
+    reviewCheckbox.addEventListener('change', () => {
+        updateCheckboxState(currentEmail,curentmessage, appointmentCheckbox.checked, reviewCheckbox.checked);
+    });
+    const updateCheckboxState = (email, message, appointmentChecked, reviewChecked) => {
+      const updateData = {
+          email: email,
+          appointment: appointmentChecked,
+          review: reviewChecked,
+          message: message
+      };
+
+      // Send updateData to server using fetch API
+      fetch('/update_checkbox_state', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updateData)
+      })
+      .then(() => {
+      })
+      .catch(error => console.error('Error updating checkbox state:', error));
+  };
+
     const sendEmailButton = document.getElementById('send-email-button');
-        sendEmailButton.onclick = () => {
-            sendEmail(currentEmail);
-        };
+    sendEmailButton.onclick = () => {
+        sendEmail(currentEmail);
+    };
+
     const sendEmail = (email) => {
         fetch('/send-email', {
             method: 'POST',
@@ -207,20 +280,18 @@
         .catch(error => console.error('Error sending email:', error));
     };
 
-
     // Initial call to update data
-    window.onload = function() {
-    updateData();
-    setTimeout(() => {
+    window.onload = () => {
+        updateData();
+        setTimeout(() => {
+            document.body.style.opacity = 1;
+        }, 4000);
         document.body.style.opacity = 1;
-    }, 4000);
-    document.body.style.opacity = 1;
-    }
+    };
+
     socket.on('data_update', () => {
         updateData(); // Fetch data from the '/index' route
     });
-
-
-</script>
+    </script>
   </body></html
 >
