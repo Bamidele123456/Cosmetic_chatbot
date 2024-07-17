@@ -429,7 +429,7 @@ def New():
                                     "event": {
                                         "name": "Monday",
                                         "languageCode": "en",
-                                        "parameters": {}
+                                        "parameters": {"email": email}
                                     }
                                 },
                                 {
@@ -445,7 +445,7 @@ def New():
                                     "event": {
                                         "name": "Tuesday",
                                         "languageCode": "en",
-                                        "parameters": {}
+                                        "parameters": {"email": email}
                                     }
                                 },
                                 {
@@ -461,7 +461,7 @@ def New():
                                     "event": {
                                         "name": "Wednesday",
                                         "languageCode": "en",
-                                        "parameters": {}
+                                        "parameters": {"email": email}
                                     }
                                 },
                                 {
@@ -477,7 +477,7 @@ def New():
                                     "event": {
                                         "name": "Thursday",
                                         "languageCode": "en",
-                                        "parameters": {}
+                                        "parameters": {"email": email}
                                     }
                                 },
                                 {
@@ -493,7 +493,7 @@ def New():
                                     "event": {
                                         "name": "Friday",
                                         "languageCode": "en",
-                                        "parameters": {}
+                                        "parameters": {"email": email}
                                     }
                                 },
                                 {
@@ -506,7 +506,7 @@ def New():
                                     "event": {
                                         "name": "Saturday",
                                         "languageCode": "en",
-                                        "parameters": {}
+                                        "parameters": {"email": email}
                                     }
                                 }
 
@@ -521,11 +521,11 @@ def New():
 @app.route('/Time', methods=['POST'])
 def Time():
     data = request.get_json()
-    last_query_result = emaild.find().sort('_id', -1).limit(1)
-
-    # Convert the result to a list and get the first item if available
-    last_result = list(last_query_result)
-    email = last_result[0].get("email")
+    email = data["queryResult"]["parameters"]["email"]
+    emails = {
+        "email": email
+    }
+    emaild.insert_one(emails)
 
     intent_name = data['queryResult']['intent']['displayName']
     update_operation = {
@@ -581,6 +581,7 @@ def Time():
             }
         ]
     }
+
     return fulfillment
 @app.route('/Times', methods=['POST'])
 def Times():
@@ -591,6 +592,7 @@ def Times():
     # Convert the result to a list and get the first item if available
     last_result = list(last_query_result)
     email = last_result[0].get("email")
+    print(email)
     details = user.find_one({"email": email})
     days = details.get("day")
     first = details.get("first")
@@ -638,6 +640,7 @@ def Times():
         ]
     }
     user.delete_many(delete_query)
+    emaild.delete_many(delete_query)
     return fulfillment
 
 @app.route('/appointment', methods=['POST'])
