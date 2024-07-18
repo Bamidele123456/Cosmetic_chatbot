@@ -147,7 +147,7 @@ def review():
     return render_template('review.html')
 @app.route('/ping')
 def ping():
-    url = 'https://cosmetic-chatbot.onrender.com'
+    url = 'https://cosmetic-chatbot.onrender.com/bot'
     try:
         response = requests.get(url)
         response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
