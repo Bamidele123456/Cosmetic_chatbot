@@ -48,8 +48,8 @@ def send_database(first,last,number,email,time,appoint):
         "number":number,
         "time":time,
         "appoint":appoint,
-        "appointent":"false",
-        "review":"false",
+        "appointment": False,
+        "review":False,
         "timestamp":timestamp,
         "messages":f"{first} {last}  wants to booked  an appointment named {appoint} in the {time}"
     }
@@ -64,8 +64,8 @@ def send_databases(first, last, number,email, appoint):
         "number":number,
         "time":time,
         "appoint":appoint,
-        "appointent": "false",
-        "review": "false",
+        "appointment": False,
+        "review": False,
         "timestamp":timestamp,
         "messages": f"{first} {last} wants to booked  an appointment named {appoint} in the {time} "
     }
@@ -147,7 +147,7 @@ def review():
     return render_template('review.html')
 @app.route('/ping')
 def ping():
-    url = 'http://localhost:5000'
+    url = 'https://cosmetic-chatbot.onrender.com'
     response = requests.get(url)
     return (f'srart {response.status_code}')
 @app.route('/review-email', methods=['POST'])
@@ -166,8 +166,6 @@ def email():
     try:
         data = request.get_json()  # Parse the incoming JSON data
         email = data.get('email')
-        print(email)
-        review_email(email)
 
         # Return a success response
         return jsonify({'status': 'success', 'message': f'Email {email} received'})
@@ -181,13 +179,12 @@ def email():
 @app.route('/index', methods=['POST'])
 def index():
     sorted_data = list(messages.find({}, {'_id': 0}).sort('timestamp', pymongo.DESCENDING))
-    print('hello')
+
 
     return jsonify(sorted_data)
 @app.route('/update_checkbox_state', methods=['POST'])
 def update_checkbox_state():
     email = request.json.get('email')
-    print(request.json)
     appointment = request.json.get('appointment', False)
     review = request.json.get('review', False)
     message = request.json.get('message')
@@ -198,7 +195,6 @@ def update_checkbox_state():
     return jsonify(success=True)
 @app.route('/get_checkbox_state', methods=['POST'])
 def get_checkbox_state():
-    print(request.json)
     message = request.json.get('message')
     email = request.json.get('email')
     result = messages.find_one({"email":email,"messages":message})

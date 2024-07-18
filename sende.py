@@ -100,7 +100,7 @@ def review_email(email):
                 <p>Thanks for choosing Cosmetic Creations Skin Sanctuary & Med Spa. I hope you enjoyed your visit to Cosmetic Creations.</p>
                 <p>Please consider leaving a review on Google and/or Yelp as it really helps us. Please mention your Aesthetician's name when leaving a review. If you have already left us a review then we thank you! ❤️ Cosmetic Creations Team!</p>
                 <div class="button-container">
-                    <a href="https://fcee-172-212-98-191.ngrok-free.app//gogn" class="button">Review Us</a>
+                    <a href="https://cosmetic-chatbot.onrender.com/gogn" class="button">Review Us</a>
                 </div>
                 <p>Sincerely,</p>
                 <p>Rebecca Rotter</p>
