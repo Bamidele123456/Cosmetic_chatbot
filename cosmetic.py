@@ -22,7 +22,7 @@ app = Flask(__name__)
 # socketio = SocketIO(app, async_mode='eventlet')
 socketio = SocketIO(app)
 scheduler = BackgroundScheduler()
-scheduler.start()
+
 app.secret_key = 'your_secret_key'
 
 uri = "mongodb+srv://Bamidele:1631324de@cluster0.hrdikjw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -148,8 +148,12 @@ def review():
 @app.route('/ping')
 def ping():
     url = 'https://cosmetic-chatbot.onrender.com'
-    response = requests.get(url)
-    return (f'srart {response.status_code}')
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+        print(f'Ping successful. Status code: {response.status_code}')
+    except requests.exceptions.RequestException as e:
+        print(f'Error while pinging: {str(e)}')
 @app.route('/review-email', methods=['POST'])
 def reviewe():
     try:
@@ -1379,4 +1383,5 @@ def open():
 
 if __name__ == '__main__':
     scheduler.add_job(ping, 'interval', minutes=10)
+    scheduler.start()
     socketio.run(app, host='0.0.0.0', port=8080)
