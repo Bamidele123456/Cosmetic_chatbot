@@ -5,11 +5,13 @@ import uuid
 # import eventlet
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask_socketio import SocketIO
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import pymongo
+import requests
 import time
 from datetime import datetime
 from private import private
@@ -17,6 +19,8 @@ from sende import review_email
 app = Flask(__name__)
 # socketio = SocketIO(app, async_mode='eventlet')
 socketio = SocketIO(app)
+scheduler = BackgroundScheduler()
+scheduler.start()
 app.secret_key = 'your_secret_key'
 
 uri = "mongodb+srv://Bamidele:1631324de@cluster0.hrdikjw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -139,6 +143,11 @@ def momew():
 @app.route('/review')
 def review():
     return render_template('review.html')
+@app.route('/ping')
+def ping():
+    url = 'http://localhost:5000'
+    response = requests.get(url)
+    return (f'srart {response.status_code}')
 @app.route('/review-email', methods=['POST'])
 def reviewe():
     try:
@@ -1371,4 +1380,5 @@ def open():
 
 
 if __name__ == '__main__':
+    scheduler.add_job(ping, 'interval', minutes=10)
     socketio.run(app, host='localhost', port=8080)
