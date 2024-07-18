@@ -1,7 +1,7 @@
 import flask
-from flask import Flask, request, json, jsonify,make_response,render_template,redirect
-from flask import Flask, session
-import uuid
+from flask import request, jsonify,render_template,redirect
+from flask import Flask
+
 # import eventlet
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -1381,4 +1381,4 @@ def open():
 
 if __name__ == '__main__':
     scheduler.add_job(ping, 'interval', minutes=10)
-    socketio.run(app, host='localhost', port=8080)
+    socketio.run(app, host='0.0.0.0', port=8080)
