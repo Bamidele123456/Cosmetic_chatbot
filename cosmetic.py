@@ -278,7 +278,21 @@ def mainpaths():
                 {
                     "text": {
                         "text": [
-                            "Hi!\nI am your assistant here at Cosmetic Creations Skin Sanctuary and Med Spa.\nHow can I help you today?"
+                            "🎉🎉🎉🎉🎉"
+                        ]
+                    }
+                },
+                {
+                    "text": {
+                        "text": [
+                            "Hi!"
+                        ]
+                    }
+                },
+                {
+                    "text": {
+                        "text": [
+                            "I am your assistant here at Cosmetic Creations Skin Sanctuary and Med Spa.\nHow can I help you today?"
                         ]
                     }
                 },
