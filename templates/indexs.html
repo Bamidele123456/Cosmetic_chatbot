@@ -124,6 +124,7 @@
    <script>
    const fullHtmlPage = document.documentElement.outerHTML;
     const socket = io();
+    let fullName = '';
 
     // Function to update data
     const updateData = () => {
@@ -198,7 +199,7 @@
     const populateAdditionalInfo = (item) => {
         document.getElementsByClassName('home-text06')[0].textContent = item.timestamp;
         document.getElementById('text').textContent = item.messages;
-        const fullName = item.first + ' ' + item.last;
+        fullName = item.first + ' ' + item.last;
         document.getElementsByClassName('home-text12')[0].textContent = fullName;
         document.getElementsByClassName('home-text14')[0].textContent = item.email;
         document.getElementsByClassName('home-text16')[0].textContent = item.number;
@@ -262,16 +263,16 @@
 
     const sendEmailButton = document.getElementById('send-email-button');
     sendEmailButton.onclick = () => {
-        sendEmail(currentEmail);
+        sendEmail(currentEmail,fullName);
     };
 
-    const sendEmail = (email) => {
+    const sendEmail = (email,fullName) => {
         fetch('/send-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email: email })
+            body: JSON.stringify({ email: email, fullName:fullName })
         })
         .then(response => response.json())
         .then(data => {

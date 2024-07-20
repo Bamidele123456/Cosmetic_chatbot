@@ -158,7 +158,6 @@ def ping():
 def reviewe():
     try:
         email = request.form.get('email')
-        review_email(email)
 
         # Return a success response
         return redirect("/review")
@@ -170,9 +169,13 @@ def email():
     try:
         data = request.get_json()  # Parse the incoming JSON data
         email = data.get('email')
+        fullName = data.get('fullName')
+
+        review_email(email, fullName)
+
 
         # Return a success response
-        return jsonify({'status': 'success', 'message': f'Email {email} received'})
+        return jsonify({'status': 'success', 'message': f'Email {email} and name {fullName} and received'})
     except Exception as e:
         # Return an error response in case of exception
         return jsonify({'status': 'error', 'message': str(e)}), 500
