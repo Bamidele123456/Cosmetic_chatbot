@@ -279,10 +279,21 @@ def mainpaths():
     fulfillment = {
             "fulfillmentMessages": [
                 {
+
+                    "text": {
+                        "text": [
+                            "Hi!\n\n\n\n\n\n"
+                        ]
+
+                    }
+                },
+                {
+
                     "text": {
                         "text": [
                             "Hi!\nI am your assistant here at Cosmetic Creations Skin Sanctuary and Med Spa.\nHow can I help you today?"
                         ]
+
                     }
                 },
                 {"payload":
