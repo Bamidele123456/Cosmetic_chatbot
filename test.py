@@ -1,17 +1,21 @@
 from pymongo import MongoClient, UpdateOne, DeleteMany
 from pymongo.server_api import ServerApi
 
-# MongoDB connection
-uri = "mongodb+srv://Bamidele:1631324de@cluster0.hrdikjw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-client = MongoClient(uri, server_api=ServerApi('1'))
+def extract_username_from_email(email):
+    """
+    Extract the username part from the email address before the '@' symbol.
 
-db = client['Data']
-hello = db['test']
-hello.insert_one({"hello":"why"})
+    Parameters:
+    email (str): The email address.
 
+    Returns:
+    str: The username part of the email address before the '@' symbol.
+    """
+    try:
+        return email.split('@')[0]
+    except IndexError:
+        return None
 
-try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
+email = "gbogbonishe@gmail.com.com"
+username = extract_username_from_email(email)
+print(username)

@@ -39,6 +39,21 @@ try:
 except Exception as e:
     print(e)
 
+def extract_username_from_email(email):
+    """
+    Extract the username part from the email address before the '@' symbol.
+
+    Parameters:
+    email (str): The email address.
+
+    Returns:
+    str: The username part of the email address before the '@' symbol.
+    """
+    try:
+        return email.split('@')[0]
+    except IndexError:
+        return None
+
 def send_database(first,last,number,email,time,appoint):
     timestamp = datetime.now()
     send={
@@ -158,8 +173,9 @@ def ping():
 def reviewe():
     try:
         email = request.form.get('email')
+        fullName = extract_username_from_email(email)
+        review_email(email, fullName)
 
-        # Return a success response
         return redirect("/review")
     except Exception as e:
         # Return an error response in case of exception
