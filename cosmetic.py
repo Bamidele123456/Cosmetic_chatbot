@@ -22,7 +22,6 @@ from sende import review_email
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
 
 app = Flask(__name__)
 socketio = SocketIO(app)
