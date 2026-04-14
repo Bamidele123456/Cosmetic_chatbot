@@ -1,5 +1,5 @@
-from gevent import monkey
-monkey.patch_all()
+import eventlet
+eventlet.monkey_patch()
 import os
 from dotenv import load_dotenv
 import flask
@@ -7,12 +7,6 @@ from flask import request, jsonify,render_template,redirect
 from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask_socketio import SocketIO
-
-app = Flask(__name__)
-socketio = SocketIO(app)
-scheduler = BackgroundScheduler()
-
-app.secret_key = 'your_secret_key'
 
 # import eventlet
 from pymongo.mongo_client import MongoClient
@@ -27,6 +21,12 @@ import time
 from datetime import datetime
 from private import private
 from sende import review_email
+
+app = Flask(__name__)
+socketio = SocketIO(app)
+scheduler = BackgroundScheduler()
+
+app.secret_key = 'your_secret_key'
 
 uri = os.getenv("uri")
 client = MongoClient(uri)
