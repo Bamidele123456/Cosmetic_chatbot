@@ -1,5 +1,3 @@
-import eventlet
-eventlet.monkey_patch()
 import flask
 from flask import request, jsonify,render_template,redirect
 from flask import Flask

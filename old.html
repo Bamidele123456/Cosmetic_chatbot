@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en"
+  ><head
+    ><title>Growling Super Manatee</title
+    ><meta property="og:title" content="Growling Super Manatee" /><meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" /><meta
+      charset="utf-8" /><meta
+      property="twitter:card"
+      content="summary_large_image" /><style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }</style
+    ><style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 16px;
+      }
+     .button-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #80deea;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      margin-left: auto; /* Pushes the button to the right */
+    }
+    .button-link:hover {
+        background-color: #0056b3;
+    }
+
+      body {
+        background: linear-gradient(to right, #e0c3fc 0%, #8ec5fc 100%);
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-gray-black);
+        background-color: var(--dl-color-gray-white);
+      }
+
+    </style
+    ><link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css" /><link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      data-tag="font" /><link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font" /><link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&amp;display=swap"
+      data-tag="font" /><link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font" /><link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" /></head
+  >
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+  <div>
+    <div class="home-container"
+        ><div class="home-container01"
+          ><div class="home-container02"
+            ><h1 class="home-text"></h1
+            ><span class="home-text01"></span></div
+          ><div class="home-container03"
+            ><div class="home-container04"
+              ><div class="home-container05"
+                ><svg viewBox="0 0 1024 1024" class="home-icon">
+                  <path
+                    d="M768 342v-86h-512v86h512zM598 598v-86h-342v86h342zM256 384v86h512v-86h-512zM854 86q34 0 59 25t25 59v512q0 34-25 60t-59 26h-598l-170 170v-768q0-34 25-59t59-25h684z"
+                  ></path></svg
+                ><div class="home-container06"
+                  ><span class="home-conversation-began"
+                    ><span>Conversation began</span><br /><br /></span
+                  ><a href="/review">Review</a></div
+                ></div
+              ><div class="home-container07"
+                ><span class="home-text06">Text</span></div
+              ><div class="home-container08"
+                ><svg viewBox="0 0 1024 1024" class="home-icon2">
+                  <path
+                    d="M512 64c282.77 0 512 186.25 512 416 0 229.752-229.23 416-512 416-27.156 0-53.81-1.734-79.824-5.044-109.978 109.978-241.25 129.7-368.176 132.596v-26.916c68.536-33.578 128-94.74 128-164.636 0-9.754-0.758-19.33-2.164-28.696-115.796-76.264-189.836-192.754-189.836-323.304 0-229.75 229.23-416 512-416z"
+                  ></path></svg
+                ><span class="home-text07"
+                  ><span id="text"></span
+                  ><br /><br /></span></div></div>
+                <form style="margin-left: auto;">
+                    <div  class="checkbox-wrapper-14">
+                        <input id="appointment-checkbox" type="checkbox" class="switch">
+                        <label for="appointment-checkbox">Appointment</label>
+                    </div>
+                    <div style="margin-left: auto;" class="checkbox-wrapper-14">
+                        <input id="review-checkbox" type="checkbox" class="switch">
+                        <label for="review-checkbox">Review Sent</label>
+                    </div>
+                </form>
+                <a href="#" id="send-email-button" class="button-link">Send Review</a>
+
+          </div
+          ><div class="home-container09"
+            ><div class="home-container10"></div
+            ><div class="home-container11"
+              ><span class="home-text11">Name</span
+              ><span class="home-text12">hello</span
+              ><span class="home-text13">Email</span
+              ><span class="home-text14">Text</span
+              ><span class="home-text15">Phone</span></div
+            ><span class="home-text16">Text</span></div
+          ></div
+        ></div
+      ></div
+    >
+
+   <script>
+   const fullHtmlPage = document.documentElement.outerHTML;
+    const socket = io();
+    let fullName = '';
+
+    // Function to update data
+    const updateData = () => {
+        // Fetch data from server
+        fetch('/index', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Update the HTML content with the fetched data
+            const container = document.getElementsByClassName('home-container02')[0];
+            container.innerHTML = ''; // Clear existing content
+
+            // Populate the HTML tags with the first item's data
+            if (data.length > 0) {
+                populateAdditionalInfo(data[0]);
+            }
+
+            // Loop through the data array
+            data.forEach(item => {
+                // Create message container
+                const messageContainer = document.createElement('div');
+                messageContainer.classList.add('message-container');
+
+                function fadeDiv() {
+                    // Toggle the 'faded' class on the div to trigger the fading effect
+                    messageContainer.classList.toggle('faded');
+
+                    // Optionally, you can remove the 'faded' class after the fading effect ends to reset the div
+                    setTimeout(() => {
+                        messageContainer.classList.remove('faded');
+                    }, 500); // Duration matches the CSS transition duration
+                }
+
+                // Add an event listener to the message container for the click event
+                messageContainer.addEventListener('click', fadeDiv);
+
+                // Create <h1> element for phone number
+                const phoneNumberElement = document.createElement('h1');
+                phoneNumberElement.classList.add('home-text');
+                phoneNumberElement.textContent = item.number;
+                phoneNumberElement.classList.add('bordered-element');
+
+                // Create <span> element for text
+                const textElement = document.createElement('span');
+                textElement.classList.add('home-text01');
+                const message = item.messages;
+                const truncatedText = message && message.length > 17 ? message.substring(0, 17) + '...' : message || '';
+                textElement.textContent = truncatedText;
+
+                // Append elements to message container
+                messageContainer.appendChild(phoneNumberElement);
+                messageContainer.appendChild(textElement);
+
+                // Add event listener to message container
+                messageContainer.addEventListener('click', () => {
+                    // Populate additional information
+                    populateAdditionalInfo(item);
+                });
+
+                // Append message container to main container
+                container.appendChild(messageContainer);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    };
+
+    // Function to populate additional information
+    const populateAdditionalInfo = (item) => {
+        document.getElementsByClassName('home-text06')[0].textContent = item.timestamp;
+        document.getElementById('text').textContent = item.messages;
+        fullName = item.first + ' ' + item.last;
+        document.getElementsByClassName('home-text12')[0].textContent = fullName;
+        document.getElementsByClassName('home-text14')[0].textContent = item.email;
+        document.getElementsByClassName('home-text16')[0].textContent = item.number;
+        curentmessage = item.messages
+        currentEmail = item.email;
+        const updateDatas = {
+          email: currentEmail,
+          message: item.messages
+      };
+        fetch('/get_checkbox_state', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updateDatas)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data) {
+            // Update the checkboxes with the fetched data
+            console.log(data.appointment)
+            console.log(data.review)
+            document.getElementById('appointment-checkbox').checked = data.appointment;
+            document.getElementById('review-checkbox').checked = data.review;
+            console.log('Checkbox state fetched successfully');
+        } else {
+            console.error('Failed to fetch checkbox state');
+        }
+    })
+    };
+    const appointmentCheckbox = document.getElementById('appointment-checkbox');
+    const reviewCheckbox = document.getElementById('review-checkbox');
+
+    appointmentCheckbox.addEventListener('change', () => {
+        updateCheckboxState(currentEmail,curentmessage, appointmentCheckbox.checked, reviewCheckbox.checked);
+    });
+
+    reviewCheckbox.addEventListener('change', () => {
+        updateCheckboxState(currentEmail,curentmessage, appointmentCheckbox.checked, reviewCheckbox.checked);
+    });
+    const updateCheckboxState = (email, message, appointmentChecked, reviewChecked) => {
+      const updateData = {
+          email: email,
+          appointment: appointmentChecked,
+          review: reviewChecked,
+          message: message
+      };
+
+      // Send updateData to server using fetch API
+      fetch('/update_checkbox_state', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updateData)
+      })
+      .then(() => {
+      })
+      .catch(error => console.error('Error updating checkbox state:', error));
+  };
+
+    const sendEmailButton = document.getElementById('send-email-button');
+    sendEmailButton.onclick = () => {
+        sendEmail(currentEmail,fullName);
+    };
+
+    const sendEmail = (email,fullName) => {
+        fetch('/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, fullName:fullName })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Email sent successfully:', data);
+        })
+        .catch(error => console.error('Error sending email:', error));
+    };
+
+    // Initial call to update data
+    window.onload = () => {
+        updateData();
+        setTimeout(() => {
+            document.body.style.opacity = 1;
+        }, 4000);
+        document.body.style.opacity = 1;
+    };
+
+    socket.on('data_update', () => {
+        updateData(); // Fetch data from the '/index' route
+    });
+    </script>
+  </body></html
+>
