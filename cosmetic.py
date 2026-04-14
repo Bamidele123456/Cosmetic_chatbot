@@ -19,14 +19,18 @@ import time
 from datetime import datetime
 from private import private
 from sende import review_email
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 app = Flask(__name__)
-# socketio = SocketIO(app, async_mode='eventlet')
 socketio = SocketIO(app)
 scheduler = BackgroundScheduler()
 
 app.secret_key = 'your_secret_key'
 
-uri = "mongodb+srv://Bamidele:1631324de@cluster0.hrdikjw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+uri = os.getenv("uri")
 client = MongoClient(uri)
 dbs = client['Data']
 day = dbs['day']
